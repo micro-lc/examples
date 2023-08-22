@@ -25,10 +25,12 @@
     "prepare": "run-s build-applications build-vue copy-static",
     "start": "docusaurus start",
     "build": "run-s prepare build-docusaurus",
-    "check:types": "yarn tsc --noEmit && echo \"✓ check types\""
+    "check:types": "yarn tsc --noEmit && echo \"✓ check types\"",
+    "bump": "ts-node scripts/version.ts"
   },
   "devDependencies": {
     "@mia-platform/cdn-publish": "^0.5.0",
+    "@ts-type/package-dts": "^2.0.8",
     "@types/eslint": "^8.44.2",
     "@types/fs-extra": "^11.0.1",
     "fs-extra": "^11.1.1",
