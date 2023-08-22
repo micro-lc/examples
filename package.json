@@ -1,6 +1,6 @@
 {
   "name": "@micro-lc/examples",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "packageManager": "yarn@3.6.2",
   "files": [
     "static"
