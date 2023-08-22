@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     uses: micro-lc/examples/.github/workflows/build.yml@main
+    with:
+      force-build: true
 
   release:
     name: Release on CDN
@@ -16,18 +18,23 @@ jobs:
       - build
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: yarn
 
+      - name: Install CDN Publish CLI
+        run: npm i -g @mia-platform/cdn-publish
+
       - name: Restore Build Cache
         id: restore-build-cache
         uses: actions/cache/restore@v3
         with:
-          path: ./build
+          path: ./static
           key: ${{ runner.os }}-${{ github.sha }}-build
   
       - name: Publish to Mia CDN
-        run: yarn cdn publish -k ${{ secrets.CDN_STORAGE_ACCESS_KEY }} -s 'mia-platform'
+        run: cdn publish -k ${{ secrets.CDN_STORAGE_ACCESS_KEY }} -s 'mia-platform'

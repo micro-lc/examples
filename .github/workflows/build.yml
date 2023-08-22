@@ -7,9 +7,32 @@ on:
         default: 16.x
         required: false
         type: string
+      force-build:
+        default: false
+        required: false
+        type: boolean
 
 jobs:
+  file-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      files: ${{ steps.filter.outputs.files }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            files:
+              - 'yarn.lock'
+              - package.json
+              - '.github/workflows/**'
+              - 'parcels/**'
+
   build-parcels:
+    needs:
+      - file-changes
+    if: needs.file-changes.outputs.files == 'true' || inputs.force-build
     runs-on: ubuntu-latest
 
     steps:
@@ -21,13 +44,6 @@ jobs:
           node-version: ${{ inputs.node-version }}
           cache: yarn
 
-      - name: Restore Build Cache
-        id: restore-build-cache
-        uses: actions/cache/restore@v3
-        with:
-          path: ./build
-          key: ${{ runner.os }}-${{ github.sha }}-build
-      
       - name: Install
         run: yarn install --immutable
 
@@ -54,6 +70,6 @@ jobs:
         id: save-build-cache
         uses: actions/cache/save@v3
         with:
-          path: ./build
+          path: ./static
           key: ${{ runner.os }}-${{ github.sha }}-build
 
