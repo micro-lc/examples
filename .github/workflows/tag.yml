@@ -30,4 +30,4 @@ jobs:
           key: ${{ runner.os }}-${{ github.sha }}-build
   
       - name: Publish to Mia CDN
-        run: yarn cdn publish -k "$STORAGE_ACCESS_KEY" -s 'mia-platform' --scope 'micro-lc/examples'
+        run: yarn cdn publish -k ${{ secrets.CDN_STORAGE_ACCESS_KEY }} -s 'mia-platform'
