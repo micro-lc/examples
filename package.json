@@ -22,9 +22,8 @@
     "build-applications": "run-p build-rbr build-rhr build-rmr build-vue",
     "build-docusaurus": "docusaurus build",
     "copy-static": "ts-node scripts/copy-static.ts",
-    "prepare": "run-s build-applications build-vue copy-static",
+    "build": "run-s build-applications build-vue copy-static",
     "start": "docusaurus start",
-    "build": "run-s prepare build-docusaurus",
     "check:types": "yarn tsc --noEmit && echo \"✓ check types\"",
     "bump": "ts-node scripts/version.ts"
   },
