@@ -22,5 +22,5 @@ then build the subpackages and copy their static files into docusaurus `static` 
 ```shell
 (cd parcels/angular12 && yarn build)
 (cd parcels/angular13 && yarn build)
-yarn prepare
+yarn build
 ```
