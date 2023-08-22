@@ -1,0 +1,59 @@
+name: Build
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        default: 16.x
+        required: false
+        type: string
+
+jobs:
+  build-website:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: yarn
+
+      - name: Restore Build Cache
+        id: restore-build-cache
+        uses: actions/cache/restore@v3
+        with:
+          path: ./build
+          key: ${{ runner.os }}-${{ github.sha }}-build
+      
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Install Angular12
+        working-directory: applications/angular12
+        run: yarn install --immutable
+
+      - name: Install Angular13
+        working-directory: applications/angular13
+        run: yarn install --immutable
+
+      - name: Build Angular12
+        working-directory: applications/angular12
+        run: yarn build
+
+      - name: Build Angular13
+        working-directory: applications/angular13
+        run: yarn build
+
+      - name: Build
+        run: yarn build
+
+      - name: Save Build Cache
+        id: save-build-cache
+        uses: actions/cache/save@v3
+        with:
+          path: ./build
+          key: ${{ runner.os }}-${{ github.sha }}-build
+

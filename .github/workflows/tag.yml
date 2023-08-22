@@ -1,0 +1,33 @@
+name: Main
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    uses: micro-lc/examples/.github/workflows/build.yml@main
+
+  release:
+    name: Release on CDN
+    runs-on: ubuntu-latest
+    needs:
+      - build
+
+    steps:
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: yarn
+
+      - name: Restore Build Cache
+        id: restore-build-cache
+        uses: actions/cache/restore@v3
+        with:
+          path: ./build
+          key: ${{ runner.os }}-${{ github.sha }}-build
+  
+      - name: Publish to Mia CDN
+        run: yarn cdn publish -k "$STORAGE_ACCESS_KEY" -s 'mia-platform' --scope 'micro-lc/examples'

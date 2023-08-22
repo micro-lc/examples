@@ -1,0 +1,13 @@
+name: Main
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: micro-lc/examples/.github/workflows/build.yml@main

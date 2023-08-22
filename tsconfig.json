@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "lib": ["DOM"],
+    "noEmit": true,
+    "types": [
+      "node",
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/theme-classic",
+      "./src/types/environment.d.ts"
+    ],
+    "baseUrl": ".",
+    "strict": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@site/*": ["./*"]
+    }
+  },
+  "exclude": ["applications"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}
