@@ -8,7 +8,7 @@ const module2DynamicImport = ($: cheerio.CheerioAPI, scriptTag: cheerio.Element)
 
   script$.removeAttr('src')
   script$.removeAttr('type')
-  script$.html(`import('${moduleSrc}')`)
+  script$.html(`import('https://cdn.mia-platform.eu${moduleSrc}')`)
 
   return script$
 }
