@@ -8,7 +8,7 @@ const module2DynamicImport = ($: cheerio.CheerioAPI, scriptTag: cheerio.Element)
 
   script$.removeAttr('src')
   script$.removeAttr('type')
-  script$.html(`import(\`\${window.location.origin}${moduleSrc}\`)`)
+  script$.html(`import('${moduleSrc}')`)
 
   return script$
 }
